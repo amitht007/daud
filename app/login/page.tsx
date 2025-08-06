@@ -1,9 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { use, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react";
+import { useEffect } from "react";
+
 
 export default function LoginPage() {
   const [loginForm, setLoginForm] = useState({ email: "", password: "" })
@@ -11,6 +14,30 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const router = useRouter()
 
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.role) {
+      if (session.user.role === "admin") {
+        router.replace("/admin/dashboard");
+      } else {
+        router.replace("/dashboard");
+      }
+    }
+  }, [status, session, router]);
+
+  if (status === "loading") {
+    // Optionally, show a spinner here
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+  if (status === "authenticated") {
+    return null;
+  }
+  
   const handleLogin = async (e) => {
     console.log('[LOGIN] handleLogin called');
     e.preventDefault();
@@ -19,18 +46,26 @@ export default function LoginPage() {
     console.log('[LOGIN] Form values:', loginForm);
     try {
       console.log('[LOGIN] Calling signIn...');
-      const res = await signIn("credentials", {
-        redirect: false,
+      const result = await signIn("credentials", {
         email: loginForm.email,
         password: loginForm.password,
+        redirect: false, // <-- change to false for manual redirect
       });
-      console.log('[LOGIN] signIn response:', res);
-      if (res.ok) {
-        console.log('[LOGIN] Login successful, redirecting...');
-        router.push("/");
+      console.log('[LOGIN] signIn result:', result);
+
+      if (result?.ok && result.url) {
+        // If result.url contains "/login", authentication failed
+        if (result.url.includes("/login")) {
+          setError("Invalid email or password");
+        } else {
+          console.log("LLLLLOOOOOOGSSSSSSSS redirect")
+          router.push("/admin/dashboard"); // Use router.push for SPA redirect
+          router.replace(result.url); // Use router.replace for SPA redirect
+        }
+      } else if (result?.error) {
+        setError(result.error);
       } else {
-        setError(res.error || "Login failed");
-        console.warn('[LOGIN] Login failed:', res.error);
+        setError("Login failed");
       }
     } catch (err) {
       setError("Login failed");
@@ -48,7 +83,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3">
-              IS
+              ISU
             </div>
             <div className="text-left">
               <div className="text-2xl font-bold text-slate-100">Infrastructure</div>
@@ -135,3 +170,4 @@ export default function LoginPage() {
     </div>
   )
 }
+

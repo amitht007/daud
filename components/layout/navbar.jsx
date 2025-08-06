@@ -6,11 +6,15 @@ import { useRouter } from "next/navigation"
 import { navigationItems } from "@/data/navigation"
 import { useAuth } from "@/hooks/useAuth"
 import { useSession, signOut } from "next-auth/react";
+import RequireAuth from "@/components/auth/RequireAuth";
 
 
 export default function Navbar({ onToggleMobileSidebar }) {
-    const router = useRouter()
+
+  const router = useRouter()
 const { data: session, status } = useSession();
+
+console.log("[Navbar] Render. status:", status, "session:", session);
 
 const isLoggedIn = status === "authenticated";
 const isLoading = status === "loading";
@@ -18,8 +22,14 @@ const username = session?.user?.name || session?.user?.email?.split("@")[0] || "
 const email = session?.user?.email || "";
 const role = session?.user?.role || "user";
 
+
+
+
+
 useEffect(() => {
+  console.log("[Navbar] useEffect. status:", status);
   if (status === "unauthenticated") {
+    console.log("[Navbar] Not authenticated, redirecting to /login");
     router.push("/login");
   }
 }, [status]);
@@ -58,7 +68,14 @@ const handleLogout = async () => {
           </button>
 
           {/* Logo Section */}
-          <Link href="/" className="flex items-center mr-8">
+          <Link
+            href={
+              isLoggedIn && userRole === "admin"
+                ? "/admin/dashboard"
+                : "/"
+            }
+            className="flex items-center mr-8"
+          >
             <div className="relative w-10 h-10 mr-3">
               <div className="w-full h-full bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg">
                 ISU
@@ -93,11 +110,25 @@ const handleLogout = async () => {
               </Link>
             </li>
           ))}
+          {/* Admin Approvals Button */}
+          <RequireAuth role="admin">
+            <li>
+              <Link
+                href="/admin/approvals"
+                className="flex items-center gap-2 px-4 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-800/50 rounded-lg transition-all duration-300 font-medium"
+              >
+                <span className="text-sm">⏳</span>
+                APPROVALS
+              </Link>
+            </li>
+          </RequireAuth>
         </ul>
 
         {/* Profile Section */}
         <div className="relative">
-          {!isLoading && isLoggedIn ? (
+          {isLoading ? (
+          <div className="text-slate-400">Loading...</div>
+        ) : isLoggedIn ? (
             <div className="relative">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
