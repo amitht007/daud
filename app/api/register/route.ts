@@ -1,9 +1,9 @@
 // pages/api/register.js
-import bcrypt from 'bcryptjs'
+// import bcrypt from 'bcryptjs'
 import { dbOperations } from '../../../lib/db'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../auth/[...nextauth]/route'
+// import { authOptions } from '../auth/[...nextauth]/route'
 
 // Generate unique user ID
 function generateUserId() {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     console.error('[REGISTER] Error parsing JSON body:', err)
     return NextResponse.json({ message: 'Invalid JSON body' }, { status: 400 })
   }
-  const { email, password, role = 'majdoor' } = body
+  const { email, password, role = 'user' } = body
   console.log('[REGISTER] Extracted fields:', { email, password, role })
 
   // Validation
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     console.warn('[REGISTER] Validation failed: password too short')
     return NextResponse.json({ message: 'Password must be at least 6 characters long' }, { status: 400 })
   }
-  if (!['maalik', 'majdoor'].includes(role)) {
+  if (!['admin', 'user'].includes(role)) {
     console.warn('[REGISTER] Validation failed: invalid role')
     return NextResponse.json({ message: 'Invalid role' }, { status: 400 })
   }
@@ -47,16 +47,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'User already exists with this email' }, { status: 400 })
     }
 
-    console.log('[REGISTER] Hashing password...')
-    const saltRounds = 10
-    const hashedPassword = await bcrypt.hash(password, saltRounds)
-    console.log('[REGISTER] Password hashed:', hashedPassword)
+    // console.log('[REGISTER] Hashing password...')
+    // const saltRounds = 10
+    // const hashedPassword = await bcrypt.hash(password, saltRounds)
+    // console.log('[REGISTER] Password hashed:', hashedPassword)
 
     const userId = generateUserId()
     console.log('[REGISTER] Generated userId:', userId)
 
-    console.log('[REGISTER] Creating user in DB:', { userId, email, hashedPassword, role })
-    const result = dbOperations.createUser.run(userId, email, hashedPassword, role)
+    console.log('[REGISTER] Creating user in DB:', { userId, email, /*hashedPassword*/ password, role })
+    const result = dbOperations.createUser.run(userId, email, /*hashedPassword*/ password, role)
     console.log('[REGISTER] DB result:', result)
 
     if (result.changes > 0) {

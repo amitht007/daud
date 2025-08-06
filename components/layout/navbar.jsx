@@ -70,11 +70,14 @@ const handleLogout = async () => {
             </div>
           </Link>
 
-          {/* Status Indicator */}
+         
+          {/* Status Indicator
           <div className="hidden lg:flex items-center mr-8 bg-green-900/30 border border-green-700 rounded-lg px-3 py-1">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2"></div>
             <span className="text-green-400 text-xs font-medium">All Systems Operational</span>
           </div>
+          */}
+          
         </div>
 
         {/* Navigation Links */}

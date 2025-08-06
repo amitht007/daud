@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const router = useRouter()
   const [warning,setWarning] = useState("")
-  const [role, setRole] = useState("majdoor")
+  const [role, setRole] = useState("user")
 
 
 const handleRegister = async (e) => {
