@@ -4,4 +4,5 @@ export const navigationItems = [
   { name: "PATTERN HUB", href: "/patterns", icon: "🔧" },
   { name: "MODEL HUB", href: "/models", icon: "🤖" },
   { name: "TRIVY", href: "/security", icon: "🛡️" },
+  {name:"ISUPOD", href:"/isupod/signin", icon:"☸️"},
 ]
