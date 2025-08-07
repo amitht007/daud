@@ -110,6 +110,21 @@ const handleLogout = async () => {
               </Link>
             </li>
           ))}
+
+          <li>
+            <Link
+              href={
+                isLoggedIn && userRole === "admin"
+                  ? "/podxs/dashboard"
+                  : "/podxs/about"
+              }
+              className="flex items-center gap-2 px-4 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-800/50 rounded-lg transition-all duration-300 font-medium"
+            >
+              <span className="text-sm">⏳</span>
+              podXs
+            </Link>
+          </li>
+
           {/* Admin Approvals Button */}
           <RequireAuth role="admin">
             <li>
@@ -178,12 +193,12 @@ const handleLogout = async () => {
                     </div>
                   </div>
                   <div className="p-2">
-                    <button className="w-full text-left px-3 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-700 rounded transition-all duration-300">
+                    {/* <button className="w-full text-left px-3 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-700 rounded transition-all duration-300">
                       Profile
                     </button>
                     <button className="w-full text-left px-3 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-700 rounded transition-all duration-300">
                       Settings
-                    </button>
+                    </button> */}
                     {userRole === "admin" && (
                       <Link
                         href="/admin/approvals"
