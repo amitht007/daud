@@ -23,6 +23,8 @@ db.serialize(() => {
     project_name TEXT NOT NULL,
     maintainers TEXT, -- JSON array of emails
     developers TEXT,  -- JSON array of emails
+    techStack TEXT,
+    tags TEXT, -- JSON array of tags
     status TEXT DEFAULT 'pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     approved_by TEXT,

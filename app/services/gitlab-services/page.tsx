@@ -15,6 +15,8 @@ export default function GitlabServicesPage() {
     projectName: "",
     maintainers: [],
     developers: [],
+    techStack: "",
+    tags: [],
   });
   const [groupQuery, setGroupQuery] = useState("");
   const [groupSuggestions, setGroupSuggestions] = useState([]);
@@ -173,12 +175,14 @@ export default function GitlabServicesPage() {
           projectName: form.projectName,
           maintainers: form.maintainers,
           developers: form.developers,
+          techStack: form.techStack,
+          tags: form.tags,
         })
       });
       console.log("[GitlabServicesPage] API response:", res);
       if (!res.ok) throw new Error("Failed to submit request");
       setSuccess("Request submitted! Awaiting admin approval.");
-      setForm({ email: "", group: "", groupId: "", description: "", projectName: "", maintainers: [], developers: [] });
+      setForm({ email: "", group: "", groupId: "", description: "", projectName: "", maintainers: [], developers: [], techStack: "", tags: [] });
     } catch (err) {
       setError("Could not submit request. Please try again.");
     }
@@ -269,6 +273,25 @@ export default function GitlabServicesPage() {
                 value={form.developers}
                 onChange={handleDevelopersChange}
                 excludeList={form.maintainers}
+              />
+            </div>
+            <div>
+              <Label htmlFor="techStack" className="text-slate-200">Tech Stack</Label>
+              <Input
+                id="techStack"
+                type="text"
+                value={form.techStack}
+                onChange={e => setForm(f => ({ ...f, techStack: e.target.value }))}
+                className="mt-1 bg-slate-900 border-slate-700 text-slate-100"
+                placeholder="e.g. React, Node.js, Python"
+              />
+            </div>
+            <div>
+              <TagInput
+                label="Tags (e.g. frontend, backend, rnd)"
+                value={form.tags}
+                onChange={tags => setForm(f => ({ ...f, tags }))}
+                excludeList={[]}
               />
             </div>
             {error && <div className="text-red-400 text-sm">{error}</div>}
