@@ -1,44 +1,49 @@
-import { NextResponse } from "next/server"
-import { dbHelpers } from "@/lib/database"
-import { authHelpers } from "@/lib/auth"
+import { NextResponse } from "next/server";
+import { dbOperations } from "../../../lib/db";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../../../lib/auth";
 
 export async function GET(request) {
   try {
-    // Verify authentication
-    const authHeader = request.headers.get("authorization")
-    const token = authHeader && authHeader.split(" ")[1]
-
-    if (!token) {
-      return NextResponse.json({ error: "Access token required" }, { status: 401 })
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
     }
+    const user = session.user;
 
-    const user = authHelpers.verifyToken(token)
-    if (!user) {
-      return NextResponse.json({ error: "Invalid token" }, { status: 403 })
-    }
-
-    let stats
+    let stats;
 
     if (user.role === "admin") {
-      // Admin gets system-wide stats
+      const pendingReqs = dbOperations.getRequestsByStatus.all('pending').length;
+      const approvedReqs = dbOperations.getRequestsByStatus.all('approved').length;
+      const rejectedReqs = dbOperations.getRequestsByStatus.all('rejected').length;
+      const totalUsers = dbOperations.getUserById.all().length;
+
       stats = {
-        ...dbHelpers.getRequestStats(),
-        activeUsers: dbHelpers.getDatabase().prepare("SELECT COUNT(*) as count FROM users WHERE is_active = 1").get()
-          .count,
-        systemHealth: 98.7, // This would come from monitoring system
-      }
+        pendingRequests: pendingReqs,
+        approvedRequests: approvedReqs,
+        rejectedRequests: rejectedReqs,
+        totalUsers: totalUsers,
+        systemHealth: 98.7,
+      };
     } else {
-      // Users get their personal stats
+      const userReqs = dbOperations.getRequestsByUserId.all(user.id);
+      const pendingReqs = userReqs.filter(r => r.status === 'pending').length;
+      const approvedReqs = userReqs.filter(r => r.status === 'approved').length;
+      const rejectedReqs = userReqs.filter(r => r.status === 'rejected').length;
+
       stats = {
-        ...dbHelpers.getUserStats(user.id),
-        resourcesUsed: 67, // This would come from resource monitoring
-        monthlyBudget: 85, // This would be calculated from actual usage
-      }
+        pendingRequests: pendingReqs,
+        approvedRequests: approvedReqs,
+        rejectedRequests: rejectedReqs,
+        resourcesUsed: 67,
+        monthlyBudget: 85,
+      };
     }
 
-    return NextResponse.json({ stats })
+    return NextResponse.json({ stats });
   } catch (error) {
-    console.error("Get stats error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    console.error("Get stats error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

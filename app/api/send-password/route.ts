@@ -1,28 +1,33 @@
-import { PrismaClient } from "@prisma/client";
+import { dbOperations } from "../../../lib/db";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
+import { NextRequest, NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
+function generateUserId() {
+  return 'u' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
+}
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const { email } = await req.json();
 
   // Check in emails table
-  const found = await prisma.email.findUnique({ where: { email } });
+  const found = dbOperations.getEmailById.get(email);
   if (!found) {
-    return new Response(JSON.stringify({ error: "Illegal access" }), { status: 403 });
+    return NextResponse.json({ error: "Illegal access" }, { status: 403 });
   }
 
   // Generate a random password
   const rawPassword = Math.random().toString(36).slice(-8);
-  const hashed = await bcrypt.hash(rawPassword, 10);
+  const hashedPassword = await bcrypt.hash(rawPassword, 10);
 
   // Store in users table
-  await prisma.user.upsert({
-    where: { email },
-    update: { password: hashed },
-    create: { email, password: hashed },
-  });
+  const existingUser = dbOperations.getUserByEmail.get(email);
+  if (existingUser) {
+    dbOperations.updateUserPassword.run(hashedPassword, existingUser.id);
+  } else {
+    const userId = generateUserId();
+    dbOperations.createUser.run(userId, email, hashedPassword, 'user');
+  }
 
   // Send password via email
   const transporter = nodemailer.createTransport({
@@ -39,5 +44,5 @@ export async function POST(req: Request) {
     text: `Your login password is: ${rawPassword}`,
   });
 
-  return new Response(JSON.stringify({ success: true }));
+  return NextResponse.json({ success: true });
 }
