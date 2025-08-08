@@ -12,7 +12,7 @@ export const serviceCards = [
     icon: "📋",
     title: "Gitlab Resource Management",
     description:
-      "Comprehensive management of GitLab resources, including projects, groups, and users.",
+      "Comprehensive management of GitLab resources, including projects, groups, and users. Easily create, update, and manage your GitLab resources with our intuitive interface.",
     route: "/services/gitlab-services",
   },
   {
