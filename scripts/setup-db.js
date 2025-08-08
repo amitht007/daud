@@ -21,6 +21,8 @@ db.serialize(() => {
     group_id TEXT,
     description TEXT,
     project_name TEXT NOT NULL,
+    maintainers TEXT, -- JSON array of emails
+    developers TEXT,  -- JSON array of emails
     status TEXT DEFAULT 'pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     approved_by TEXT,
