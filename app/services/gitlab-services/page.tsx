@@ -56,12 +56,13 @@ export default function GitlabServicesPage() {
   }
 
   // Handle form submission
-  async function handleSubmit(e) {
+  async function handleSubmit(e:any) {
     e.preventDefault()
     setSubmitting(true)
     setError("")
     setSuccess("")
     try {
+    console.log("[GitlabServicesPage] handleSubmit called with form:", form)
       // Save request to DB via API
       const res = await fetch("/api/gitlab/project-request", {
         method: "POST",
@@ -74,6 +75,7 @@ export default function GitlabServicesPage() {
           projectName: form.projectName,
         })
       })
+    console.log("[GitlabServicesPage] API response:", res)
       if (!res.ok) throw new Error("Failed to submit request")
       setSuccess("Request submitted! Awaiting admin approval.")
       setForm({ email: "", group: "", groupId: "", description: "", projectName: "" })

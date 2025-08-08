@@ -11,8 +11,27 @@ const adminPasswordHash = bcrypt.hashSync(adminPassword, 10);
 const db = new sqlite3.Database('./database.db');
 
 // Your entire schema + insert script
+
+// Create gitlab_project_requests table if it doesn't exist
+db.serialize(() => {
+  db.run(`CREATE TABLE IF NOT EXISTS gitlab_project_requests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL,
+    group_name TEXT NOT NULL,
+    group_id TEXT,
+    description TEXT,
+    project_name TEXT NOT NULL,
+    status TEXT DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    approved_by TEXT,
+    approved_at DATETIME,
+    rejected_by TEXT,
+    rejected_at DATETIME,
+    rejection_reason TEXT,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );`);
+});
 const schema = `
--- USERS TABLE
 CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(20) PRIMARY KEY,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -23,7 +42,6 @@ CREATE TABLE IF NOT EXISTS users (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
--- EMAILS TABLE
 CREATE TABLE IF NOT EXISTS emails (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email_id VARCHAR(100) UNIQUE NOT NULL,
@@ -32,7 +50,6 @@ CREATE TABLE IF NOT EXISTS emails (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_emails_email_id ON emails(email_id);
 
--- REQUEST ITEM LIST TABLE
 CREATE TABLE IF NOT EXISTS requests_item_list (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     item TEXT NOT NULL,
