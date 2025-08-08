@@ -15,8 +15,10 @@ export async function POST(req: NextRequest) {
     if (typeof groupId !== 'number' || isNaN(groupId)) {
       return NextResponse.json({ error: 'Invalid groupId/namespace_id' }, { status: 400 })
     }
-    // const GITLAB_URL = 'https://gitlab.txninfra.com/api/v4/projects'
-    const GITLAB_URL = 'https://gitlab.com/api/v4/projects'
+ 
+    // Use environment variable for GitLab token
+    const GITLAB_URL = process.env.GITLAB_URL + "/api/v4/projects"
+
     const GITLAB_TOKEN = process.env.GITLAB_ACCESS_TOKEN
     const payload = {
       name: projectName,

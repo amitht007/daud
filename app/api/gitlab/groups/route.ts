@@ -7,8 +7,8 @@ export async function GET(req: NextRequest) {
   if (!search || search.length < 2) {
     return NextResponse.json({ groups: [] })
   }
-//   const GITLAB_URL = 'https://gitlab.txninfra.com/api/v4/groups'
-  const GITLAB_URL = 'https://gitlab.com/api/v4/groups'
+    // Use environment variable for GitLab URL
+  const GITLAB_URL = process.env.GITLAB_URL+"/api/v4/groups"
   const GITLAB_TOKEN = process.env.GITLAB_ACCESS_TOKEN
   try {
     const res = await fetch(`${GITLAB_URL}?search=${encodeURIComponent(search)}`, {
