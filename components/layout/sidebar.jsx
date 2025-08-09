@@ -8,45 +8,46 @@ const menuSections = [
     title: "OVERVIEW",
     items: [
       { icon: "🏠", text: "Command Center", href: "/", active: true },
-      { icon: "📊", text: "Analytics Hub", href: "/analytics" },
-      { icon: "📈", text: "Metrics Board", href: "/metrics" },
+      // { icon: "📊", text: "Analytics Hub", href: "/analytics" },
+      // { icon: "📈", text: "Metrics Board", href: "/metrics" },
     ],
   },
-  {
-    title: "RESOURCES",
-    items: [
-      { icon: "💻", text: "Compute Units", href: "/compute" },
-      { icon: "💾", text: "Storage Vault", href: "/storage" },
-      { icon: "🌐", text: "Network Grid", href: "/network" },
-      { icon: "🗄️", text: "Data Fortress", href: "/database" },
-    ],
-  },
-  {
-    title: "OPERATIONS",
-    items: [
-      { icon: "🚀", text: "Deploy Matrix", href: "/deploy" },
-      { icon: "🔄", text: "Pipeline Control", href: "/pipeline" },
-      { icon: "📦", text: "Container Bay", href: "/containers" },
-      { icon: "☸️", text: "K8s Command", href: "/kubernetes" },
-    ],
-  },
-  {
-    title: "SECURITY",
-    items: [
-      { icon: "🔒", text: "Access Control", href: "/access" },
-      { icon: "🛡️", text: "Threat Scanner", href: "/security" },
-      { icon: "🔑", text: "Secret Vault", href: "/secrets" },
-      { icon: "📋", text: "Compliance Check", href: "/compliance" },
-    ],
-  },
-  {
-    title: "SETTINGS",
-    items: [
-      { icon: "⚙️", text: "Core Settings", href: "/settings" },
-      { icon: "👥", text: "Agent Registry", href: "/agents" },
-      { icon: "🔔", text: "Alert System", href: "/alerts" },
-    ],
-  },
+  
+  // {
+  //   title: "RESOURCES",
+  //   items: [
+  //     { icon: "💻", text: "Compute Units", href: "/compute" },
+  //     { icon: "💾", text: "Storage Vault", href: "/storage" },
+  //     { icon: "🌐", text: "Network Grid", href: "/network" },
+  //     { icon: "🗄️", text: "Data Fortress", href: "/database" },
+  //   ],
+  // },
+  // {
+  //   title: "OPERATIONS",
+  //   items: [
+  //     { icon: "🚀", text: "Deploy Matrix", href: "/deploy" },
+  //     { icon: "🔄", text: "Pipeline Control", href: "/pipeline" },
+  //     { icon: "📦", text: "Container Bay", href: "/containers" },
+  //     { icon: "☸️", text: "K8s Command", href: "/kubernetes" },
+  //   ],
+  // },
+  // {
+  //   title: "SECURITY",
+  //   items: [
+  //     { icon: "🔒", text: "Access Control", href: "/access" },
+  //     { icon: "🛡️", text: "Threat Scanner", href: "/security" },
+  //     { icon: "🔑", text: "Secret Vault", href: "/secrets" },
+  //     { icon: "📋", text: "Compliance Check", href: "/compliance" },
+  //   ],
+  // },
+  // {
+  //   title: "SETTINGS",
+  //   items: [
+  //     { icon: "⚙️", text: "Core Settings", href: "/settings" },
+  //     { icon: "👥", text: "Agent Registry", href: "/agents" },
+  //     { icon: "🔔", text: "Alert System", href: "/alerts" },
+  //   ],
+  // },
 ]
 
 export default function Sidebar({ isCollapsed, isMobileOpen, onToggle, onMobileClose }) {

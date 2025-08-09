@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(20) PRIMARY KEY,
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    role VARCHAR(20) DEFAULT 'majdoor' CHECK (role IN ('maalik', 'majdoor')),
+    role VARCHAR(20) DEFAULT 'user' CHECK (role IN ('admin', 'user')),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -42,7 +42,7 @@ CREATE INDEX IF NOT EXISTS idx_requests_status ON requests_item_list(status);
 
 -- Insert into users
 INSERT INTO users (id, email, password_hash, role)
-VALUES ('u123', 'amith@example.com', 'hashed_password_123', 'maalik');
+VALUES ('u123', 'amitht007@gmail.com.com', '123', 'admin');
 
 -- Insert into emails
 INSERT INTO emails (email_id)

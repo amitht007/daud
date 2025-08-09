@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import { dbOperations } from '../../../../lib/db'
 
 const handler= NextAuth({
+// Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -47,11 +48,15 @@ const handler= NextAuth({
     })
   ],
   
+  // Custom pages for sign in and sign up
   pages: {
     signIn: '/auth/login',
     signUp: '/auth/register',
   },
   
+
+
+  // Callbacks to handle JWT and session
   callbacks: {
     async jwt({ token, user }: { token: any, user?: any }) {
       // Add user info to token on sign in
@@ -65,18 +70,24 @@ const handler= NextAuth({
     
     async session({ session, token }: { session: any, token: any }) {
       // Add user info to session
+      console.log('[NEXTAUTH] Session callback:', { session, token })
+      
       if (token) {
         session.user.id = token.id
         session.user.role = token.role
         session.user.email = token.email
       }
       return session
+    },
+
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl
     }
   },
   
   session: {
     strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 1 * 24 * 60 * 60, // 30 days
   },
   
   secret: process.env.NEXTAUTH_SECRET,

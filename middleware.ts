@@ -1,28 +1,52 @@
-// middleware.ts
-import { withAuth } from 'next-auth/middleware'
-import { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-export default withAuth({
-  callbacks: {
-    authorized: ({ token, req }: { token: any; req: NextRequest }) => {
-      const path = req.nextUrl.pathname
+const PUBLIC_PATHS = ["/", "/learn-more", "/api", "/_next", "/favicon.ico", "/static"];
+const AUTH_PAGES = ["/login", "/register", "/auth/login", "/auth/register"];
 
-      const isAdminRoute = path.startsWith('/admin')
-      const isUserRoute = path.startsWith('/dashboard')
+export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  // Allow public paths and static files
+  if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
+    return NextResponse.next();
+  }
 
-      if (!token) return false
+  // Get the token (JWT) from cookies
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-      if (isAdminRoute) return token.role === 'admin'
-      if (isUserRoute) return ['admin', 'user'].includes(token.role)
+  // If user is authenticated and tries to access login/register, redirect to dashboard
+  if (token && AUTH_PAGES.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
+    if (token.role === "admin") {
+      return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+    }
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
-      return true // allow public routes
-    },
-  },
-  pages: {
-    signIn: '/auth/login',
-  },
-})
+  // If user is not authenticated and tries to access protected pages, redirect to login
+  if (!token && !AUTH_PAGES.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
+    // Allow public pages, block others
+    if (pathname.startsWith("/admin") || pathname.startsWith("/dashboard")) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+  }
 
-export const config = {
-  matcher: ['/admin/:path*', '/dashboard/:path*'],
+  // If user is authenticated but tries to access admin pages without admin role, redirect to home
+  if (pathname.startsWith("/admin") && token?.role !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  // If user is authenticated but tries to access user dashboard without user role, redirect to home
+  if (pathname.startsWith("/dashboard") && token?.role !== "user" && token?.role !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  return NextResponse.next();
 }
+
+// Optionally, configure matcher for only relevant routes
+export const config = {
+  matcher: [
+    "/((?!api|_next|static|favicon.ico).*)"
+  ],
+};

@@ -11,49 +11,29 @@ import { serviceCards } from "@/data/services"
 import { patterns } from "@/data/patterns"
 import { faqs } from "@/data/faqs"
 
-export default function Dashboard() {
-  const [expandedPattern, setExpandedPattern] = useState(null)
-  const [activeFAQ, setActiveFAQ] = useState(null)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userRole, setUserRole] = useState(null)
+export default function HomePage() {
+  const [expandedPattern, setExpandedPattern] = useState<number | null>(null)
+  const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
   const router = useRouter()
 
   useEffect(() => {
-    // Check authentication status
-    const loggedIn = localStorage.getItem("isLoggedIn")
-    const role = localStorage.getItem("userRole")
-
-    if (loggedIn === "true") {
-      setIsLoggedIn(true)
-      setUserRole(role)
-
-      // Redirect authenticated users to their respective dashboards
-      if (role === "admin") {
-        router.push("/admin/dashboard")
-        return
-      } else if (role === "user") {
-        router.push("/user/dashboard")
-        return
-      }
-    }
-
+    // Setup card animations
     const observer = setupCardAnimations()
 
-    const handleEscape = (e) => {
+    // Escape key handler for closing expanded pattern
+    const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && expandedPattern !== null) {
         setExpandedPattern(null)
         document.body.style.overflow = "auto"
       }
     }
-
     document.addEventListener("keydown", handleEscape)
-
     return () => {
       document.removeEventListener("keydown", handleEscape)
     }
-  }, [expandedPattern, router])
+  }, [expandedPattern])
 
-  const handlePatternToggle = (index) => {
+  const handlePatternToggle = (index: number) => {
     if (expandedPattern === index) {
       setExpandedPattern(null)
       document.body.style.overflow = "auto"
@@ -68,11 +48,11 @@ export default function Dashboard() {
     document.body.style.overflow = "auto"
   }
 
-  const handleFAQToggle = (index) => {
+  const handleFAQToggle = (index: number) => {
     setActiveFAQ(activeFAQ === index ? null : index)
   }
 
-  const handleServiceClick = (route) => {
+  const handleServiceClick = (route: string) => {
     router.push(route)
   }
 
@@ -84,7 +64,7 @@ export default function Dashboard() {
     router.push("/learn-more")
   }
 
-  // Show public landing page for non-authenticated users
+  // Public landing page
   return (
     <div className="bg-slate-900 min-h-screen">
       {/* Backdrop for expanded cards */}
@@ -225,3 +205,4 @@ export default function Dashboard() {
     </div>
   )
 }
+       

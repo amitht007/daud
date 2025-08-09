@@ -7,4 +7,4 @@ export default function RootLayout({ children }) {
 
 export const metadata = {
       generator: 'v0.dev'
-    };
+};

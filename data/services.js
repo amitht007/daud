@@ -8,12 +8,12 @@ export const serviceCards = [
     route: "/services/project-setup",
   },
   {
-    id: "resource-management",
+    id: "gitlab-services",
     icon: "📋",
-    title: "Resource Management",
+    title: "Gitlab Resource Management",
     description:
-      "Comprehensive inventory management system to track, monitor, and optimize your infrastructure resources across multiple environments.",
-    route: "/services/resource-management",
+      "Comprehensive management of GitLab resources, including projects, groups, and users. Easily create, update, and manage your GitLab resources with our intuitive interface.",
+    route: "/services/gitlab-services",
   },
   {
     id: "security-compliance",
