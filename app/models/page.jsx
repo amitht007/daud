@@ -107,189 +107,192 @@ export default function ModelHubPage() {
     })
 
   return (
-    <div className="px-8 py-8 max-md:px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-100 mb-4">Model Hub</h1>
-          <p className="text-xl text-slate-300 mb-6">
-            Pre-built infrastructure models and templates ready for deployment
-          </p>
+    // <div className="px-8 py-8 max-md:px-4">
+    //   <div className="max-w-7xl mx-auto">
+    //     {/* Header */}
+    //     <div className="mb-8">
+    //       <h1 className="text-4xl font-bold text-slate-100 mb-4">Model Hub</h1>
+    //       <p className="text-xl text-slate-300 mb-6">
+    //         Pre-built infrastructure models and templates ready for deployment
+    //       </p>
 
-          {/* Search and Filter */}
-          <div className="flex flex-col lg:flex-row gap-4 mb-8">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Search models..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-              />
-            </div>
-            <div className="flex gap-2 overflow-x-auto">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 whitespace-nowrap ${
-                    selectedCategory === category.id
-                      ? "bg-blue-600 text-white"
-                      : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
-            </div>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="downloads">Sort by Downloads</option>
-              <option value="rating">Sort by Rating</option>
-              <option value="name">Sort by Name</option>
-            </select>
-          </div>
-        </div>
+    //       {/* Search and Filter */}
+    //       <div className="flex flex-col lg:flex-row gap-4 mb-8">
+    //         <div className="flex-1">
+    //           <input
+    //             type="text"
+    //             placeholder="Search models..."
+    //             value={searchTerm}
+    //             onChange={(e) => setSearchTerm(e.target.value)}
+    //             className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+    //           />
+    //         </div>
+    //         <div className="flex gap-2 overflow-x-auto">
+    //           {categories.map((category) => (
+    //             <button
+    //               key={category.id}
+    //               onClick={() => setSelectedCategory(category.id)}
+    //               className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 whitespace-nowrap ${
+    //                 selectedCategory === category.id
+    //                   ? "bg-blue-600 text-white"
+    //                   : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+    //               }`}
+    //             >
+    //               {category.name}
+    //             </button>
+    //           ))}
+    //         </div>
+    //         <select
+    //           value={sortBy}
+    //           onChange={(e) => setSortBy(e.target.value)}
+    //           className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    //         >
+    //           <option value="downloads">Sort by Downloads</option>
+    //           <option value="rating">Sort by Rating</option>
+    //           <option value="name">Sort by Name</option>
+    //         </select>
+    //       </div>
+    //     </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700">
-            <div className="text-2xl font-bold text-blue-400 mb-2">{models.length}</div>
-            <div className="text-slate-400 text-sm">Available Models</div>
-          </div>
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700">
-            <div className="text-2xl font-bold text-cyan-400 mb-2">87K+</div>
-            <div className="text-slate-400 text-sm">Total Downloads</div>
-          </div>
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700">
-            <div className="text-2xl font-bold text-purple-400 mb-2">4.7</div>
-            <div className="text-slate-400 text-sm">Average Rating</div>
-          </div>
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700">
-            <div className="text-2xl font-bold text-green-400 mb-2">99.2%</div>
-            <div className="text-slate-400 text-sm">Success Rate</div>
-          </div>
-        </div>
+    //     {/* Stats */}
+    //     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    //       <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700">
+    //         <div className="text-2xl font-bold text-blue-400 mb-2">{models.length}</div>
+    //         <div className="text-slate-400 text-sm">Available Models</div>
+    //       </div>
+    //       <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700">
+    //         <div className="text-2xl font-bold text-cyan-400 mb-2">87K+</div>
+    //         <div className="text-slate-400 text-sm">Total Downloads</div>
+    //       </div>
+    //       <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700">
+    //         <div className="text-2xl font-bold text-purple-400 mb-2">4.7</div>
+    //         <div className="text-slate-400 text-sm">Average Rating</div>
+    //       </div>
+    //       <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700">
+    //         <div className="text-2xl font-bold text-green-400 mb-2">99.2%</div>
+    //         <div className="text-slate-400 text-sm">Success Rate</div>
+    //       </div>
+    //     </div>
 
-        {/* Models Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {filteredModels.map((model) => (
-            <div
-              key={model.id}
-              className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer group"
-            >
-              {/* Header */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center">
-                  <div className="text-2xl mr-3">{model.icon}</div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-100 group-hover:text-blue-400 transition-colors duration-300">
-                      {model.name}
-                    </h3>
-                    <div className="text-sm text-slate-400">{model.category}</div>
-                  </div>
-                </div>
-                <div
-                  className={`px-2 py-1 rounded text-xs font-medium ${
-                    model.status === "stable"
-                      ? "bg-green-900/30 text-green-400 border border-green-700/50"
-                      : "bg-yellow-900/30 text-yellow-400 border border-yellow-700/50"
-                  }`}
-                >
-                  {model.status}
-                </div>
-              </div>
+    //     {/* Models Grid */}
+    //     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    //       {filteredModels.map((model) => (
+    //         <div
+    //           key={model.id}
+    //           className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer group"
+    //         >
+    //           {/* Header */}
+    //           <div className="flex items-start justify-between mb-4">
+    //             <div className="flex items-center">
+    //               <div className="text-2xl mr-3">{model.icon}</div>
+    //               <div>
+    //                 <h3 className="text-lg font-semibold text-slate-100 group-hover:text-blue-400 transition-colors duration-300">
+    //                   {model.name}
+    //                 </h3>
+    //                 <div className="text-sm text-slate-400">{model.category}</div>
+    //               </div>
+    //             </div>
+    //             <div
+    //               className={`px-2 py-1 rounded text-xs font-medium ${
+    //                 model.status === "stable"
+    //                   ? "bg-green-900/30 text-green-400 border border-green-700/50"
+    //                   : "bg-yellow-900/30 text-yellow-400 border border-yellow-700/50"
+    //               }`}
+    //             >
+    //               {model.status}
+    //             </div>
+    //           </div>
 
-              {/* Description */}
-              <p className="text-slate-300 text-sm mb-4 line-clamp-2">{model.description}</p>
+    //           {/* Description */}
+    //           <p className="text-slate-300 text-sm mb-4 line-clamp-2">{model.description}</p>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1 mb-4">
-                {model.tags.slice(0, 3).map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-900/30 text-blue-400 border border-blue-700/50 rounded px-2 py-1 text-xs font-mono"
-                  >
-                    {tag}
-                  </span>
-                ))}
-                {model.tags.length > 3 && <span className="text-slate-400 text-xs">+{model.tags.length - 3} more</span>}
-              </div>
+    //           {/* Tags */}
+    //           <div className="flex flex-wrap gap-1 mb-4">
+    //             {model.tags.slice(0, 3).map((tag, index) => (
+    //               <span
+    //                 key={index}
+    //                 className="bg-blue-900/30 text-blue-400 border border-blue-700/50 rounded px-2 py-1 text-xs font-mono"
+    //               >
+    //                 {tag}
+    //               </span>
+    //             ))}
+    //             {model.tags.length > 3 && <span className="text-slate-400 text-xs">+{model.tags.length - 3} more</span>}
+    //           </div>
 
-              {/* Stats */}
-              <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center text-slate-400">
-                    <span className="mr-1">📥</span>
-                    {model.downloads}
-                  </div>
-                  <div className="flex items-center text-slate-400">
-                    <span className="mr-1">⭐</span>
-                    {model.rating}
-                  </div>
-                </div>
-                <div className="text-slate-400">{model.version}</div>
-              </div>
+    //           {/* Stats */}
+    //           <div className="flex items-center justify-between text-sm">
+    //             <div className="flex items-center space-x-4">
+    //               <div className="flex items-center text-slate-400">
+    //                 <span className="mr-1">📥</span>
+    //                 {model.downloads}
+    //               </div>
+    //               <div className="flex items-center text-slate-400">
+    //                 <span className="mr-1">⭐</span>
+    //                 {model.rating}
+    //               </div>
+    //             </div>
+    //             <div className="text-slate-400">{model.version}</div>
+    //           </div>
 
-              {/* Actions */}
-              <div className="flex gap-2 mt-4">
-                <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-medium transition-all duration-300 text-sm">
-                  Deploy
-                </button>
-                <button className="border border-slate-600 text-slate-300 hover:bg-slate-700 py-2 px-4 rounded font-medium transition-all duration-300 text-sm">
-                  View
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+    //           {/* Actions */}
+    //           <div className="flex gap-2 mt-4">
+    //             <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-medium transition-all duration-300 text-sm">
+    //               Deploy
+    //             </button>
+    //             <button className="border border-slate-600 text-slate-300 hover:bg-slate-700 py-2 px-4 rounded font-medium transition-all duration-300 text-sm">
+    //               View
+    //             </button>
+    //           </div>
+    //         </div>
+    //       ))}
+    //     </div>
 
-        {/* Popular Categories */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-slate-100 mb-6">Popular Categories</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer">
-              <div className="text-3xl mb-4">🏗️</div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-2">Infrastructure as Code</h3>
-              <p className="text-slate-300 mb-4">Terraform, CloudFormation, and Pulumi templates</p>
-              <div className="text-blue-400 font-medium">12 models</div>
-            </div>
+    //     {/* Popular Categories */}
+    //     <div className="mb-8">
+    //       <h2 className="text-2xl font-bold text-slate-100 mb-6">Popular Categories</h2>
+    //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    //         <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer">
+    //           <div className="text-3xl mb-4">🏗️</div>
+    //           <h3 className="text-xl font-semibold text-slate-100 mb-2">Infrastructure as Code</h3>
+    //           <p className="text-slate-300 mb-4">Terraform, CloudFormation, and Pulumi templates</p>
+    //           <div className="text-blue-400 font-medium">12 models</div>
+    //         </div>
 
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer">
-              <div className="text-3xl mb-4">☸️</div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-2">Kubernetes</h3>
-              <p className="text-slate-300 mb-4">Container orchestration and deployment models</p>
-              <div className="text-cyan-400 font-medium">8 models</div>
-            </div>
+    //         <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer">
+    //           <div className="text-3xl mb-4">☸️</div>
+    //           <h3 className="text-xl font-semibold text-slate-100 mb-2">Kubernetes</h3>
+    //           <p className="text-slate-300 mb-4">Container orchestration and deployment models</p>
+    //           <div className="text-cyan-400 font-medium">8 models</div>
+    //         </div>
 
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer">
-              <div className="text-3xl mb-4">🔒</div>
-              <h3 className="text-xl font-semibold text-slate-100 mb-2">Security</h3>
-              <p className="text-slate-300 mb-4">Security hardening and compliance templates</p>
-              <div className="text-purple-400 font-medium">6 models</div>
-            </div>
-          </div>
-        </div>
+    //         <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer">
+    //           <div className="text-3xl mb-4">🔒</div>
+    //           <h3 className="text-xl font-semibold text-slate-100 mb-2">Security</h3>
+    //           <p className="text-slate-300 mb-4">Security hardening and compliance templates</p>
+    //           <div className="text-purple-400 font-medium">6 models</div>
+    //         </div>
+    //       </div>
+    //     </div>
 
-        {/* Call to Action */}
-        <div className="bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-700/50 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-slate-100 mb-4">Can't Find What You Need?</h2>
-          <p className="text-slate-300 mb-6">
-            Request a custom model or contribute your own infrastructure templates to the community.
-          </p>
-          <div className="flex gap-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300">
-              Request Model
-            </button>
-            <button className="border border-blue-600 text-blue-400 hover:bg-blue-600/10 px-6 py-3 rounded-lg font-medium transition-all duration-300">
-              Contribute
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    //     {/* Call to Action */}
+    //     <div className="bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-700/50 rounded-xl p-8">
+    //       <h2 className="text-2xl font-bold text-slate-100 mb-4">Can't Find What You Need?</h2>
+    //       <p className="text-slate-300 mb-6">
+    //         Request a custom model or contribute your own infrastructure templates to the community.
+    //       </p>
+    //       <div className="flex gap-4">
+    //         <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300">
+    //           Request Model
+    //         </button>
+    //         <button className="border border-blue-600 text-blue-400 hover:bg-blue-600/10 px-6 py-3 rounded-lg font-medium transition-all duration-300">
+    //           Contribute
+    //         </button>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+    <div className="flex items-center top-50 justify-center h-screen bg-gray-900">
+    <h1 class="text-7xl mt-50 font-extrabold">Coming Soon !!!</h1>
+   </div>
   )
 }
