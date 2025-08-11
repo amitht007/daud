@@ -35,6 +35,7 @@ db.serialize(() => {
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );`);
 });
+// a
 const schema = `
 CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(20) PRIMARY KEY,
