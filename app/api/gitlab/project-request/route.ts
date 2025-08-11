@@ -22,6 +22,10 @@ export async function POST(req: NextRequest) {
       group_id,
       description,
       project_name,
+      maintainers: JSON.stringify(body.maintainers || []),
+      developers: JSON.stringify(body.developers || []),
+      techStack: body.techStack || '',
+      tags: JSON.stringify(body.tags || []),
       status: 'pending',
     });
     if (!result) {

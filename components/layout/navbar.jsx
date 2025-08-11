@@ -82,8 +82,8 @@ const handleLogout = async () => {
               </div>
             </div>
             <div className="flex flex-col">
-              <div className="text-xl font-bold text-slate-100">Infrastructure</div>
-              <div className="text-xs text-slate-400 font-medium">Platform</div>
+              <div className="text-xl font-bold text-slate-100">Self Service Infra</div>
+              <div className="text-xs text-slate-400 font-medium">v0.0.1-preview</div>
             </div>
           </Link>
 

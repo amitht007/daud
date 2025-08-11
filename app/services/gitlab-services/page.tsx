@@ -60,13 +60,13 @@ export default function GitlabServicesPage() {
   }
 
   // Tag input for maintainers/developers with email autosuggest
-  function TagInput({ label, value, onChange, excludeList = [] }) {
+  function TagInput({ label, value, onChange, excludeList = [], suggestionsList = null }) {
     const [input, setInput] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef(null);
 
-    // Fetch email suggestions as user types
+    // For tags, use suggestionsList if provided, else fetch emails
     async function fetchEmailSuggestions(query) {
       if (!query || query.length < 2) {
         setSuggestions([]);
@@ -84,16 +84,29 @@ export default function GitlabServicesPage() {
 
     const handleInputChange = (e) => {
       setInput(e.target.value);
-      fetchEmailSuggestions(e.target.value);
-      setShowSuggestions(true);
+      if (suggestionsList) {
+        // For tags: filter from suggestionsList
+        const q = e.target.value.toLowerCase();
+        setSuggestions(
+          suggestionsList.filter(
+            tag =>
+              tag.toLowerCase().includes(q) &&
+              !value.includes(tag)
+          )
+        );
+        setShowSuggestions(true);
+      } else {
+        fetchEmailSuggestions(e.target.value);
+        setShowSuggestions(true);
+      }
     };
 
     const handleKeyDown = (e) => {
       if ((e.key === "Enter" || e.key === ",") && input.trim()) {
         e.preventDefault();
-        const email = input.trim();
-        if (value.includes(email) || excludeList.includes(email)) return;
-        onChange([...value, email]);
+        const entry = input.trim();
+        if (value.includes(entry) || excludeList.includes(entry)) return;
+        onChange([...value, entry]);
         setInput("");
         setSuggestions([]);
         setShowSuggestions(false);
@@ -103,9 +116,9 @@ export default function GitlabServicesPage() {
       }
     };
 
-    const handleSuggestionClick = (email) => {
-      if (value.includes(email) || excludeList.includes(email)) return;
-      onChange([...value, email]);
+    const handleSuggestionClick = (entry) => {
+      if (value.includes(entry) || excludeList.includes(entry)) return;
+      onChange([...value, entry]);
       setInput("");
       setSuggestions([]);
       setShowSuggestions(false);
@@ -116,10 +129,10 @@ export default function GitlabServicesPage() {
       <div className="relative">
         <label className="block text-slate-300 mb-1">{label}</label>
         <div className="flex flex-wrap gap-1 bg-slate-900 border border-slate-700 rounded px-2 py-1">
-          {value.map((email, idx) => (
-            <span key={email} className="bg-blue-700 text-white px-2 py-0.5 rounded text-xs flex items-center">
-              {email}
-              <button type="button" className="ml-1 text-xs" onClick={() => onChange(value.filter((v) => v !== email))}>&times;</button>
+          {value.map((entry, idx) => (
+            <span key={entry} className="bg-blue-700 text-white px-2 py-0.5 rounded text-xs flex items-center">
+              {entry}
+              <button type="button" className="ml-1 text-xs" onClick={() => onChange(value.filter((v) => v !== entry))}>&times;</button>
             </span>
           ))}
           <input
@@ -128,20 +141,20 @@ export default function GitlabServicesPage() {
             value={input}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            placeholder="Add email and press Enter"
+            placeholder={suggestionsList ? "Add tag and press Enter" : "Add email and press Enter"}
             onFocus={() => input && setShowSuggestions(true)}
             autoComplete="off"
           />
         </div>
         {showSuggestions && suggestions.length > 0 && (
           <ul className="absolute z-10 left-0 right-0 bg-slate-800 border border-slate-700 rounded mt-1 max-h-40 overflow-y-auto">
-            {suggestions.map((email) => (
+            {suggestions.map((entry) => (
               <li
-                key={email}
+                key={entry}
                 className="px-3 py-2 cursor-pointer hover:bg-blue-800 text-slate-100"
-                onClick={() => handleSuggestionClick(email)}
+                onClick={() => handleSuggestionClick(entry)}
               >
-                {email}
+                {entry}
               </li>
             ))}
           </ul>
@@ -188,6 +201,16 @@ export default function GitlabServicesPage() {
     }
     setSubmitting(false);
   }
+
+  // Add a function to check if the form is valid
+  const isFormValid =
+    form.email.trim() &&
+    form.group.trim() &&
+    form.groupId &&
+    form.projectName.trim() &&
+    form.description.trim() &&
+    form.maintainers.length > 0 &&
+    form.developers.length > 0;
 
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center px-4">
@@ -292,11 +315,12 @@ export default function GitlabServicesPage() {
                 value={form.tags}
                 onChange={tags => setForm(f => ({ ...f, tags }))}
                 excludeList={[]}
+                suggestionsList={["frontend", "backend", "rnd"]}
               />
             </div>
             {error && <div className="text-red-400 text-sm">{error}</div>}
             {success && <div className="text-green-400 text-sm">{success}</div>}
-            <Button type="submit" disabled={submitting} className="w-full bg-blue-600 hover:bg-blue-700">
+            <Button type="submit" disabled={submitting || !isFormValid} className="w-full bg-blue-600 hover:bg-blue-700">
               {submitting ? "Submitting..." : "Submit Request"}
             </Button>
           </form>

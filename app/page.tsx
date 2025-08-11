@@ -77,13 +77,14 @@ export default function HomePage() {
         {/* Hero Section */}
         <section className="text-center py-16 max-md:py-12">
           <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent max-md:text-4xl tracking-tight">
-            Infrastructure Platform
+            Self Service Infra
           </h1>
           <p className="text-xl text-slate-300 mb-8 max-w-4xl mx-auto leading-relaxed max-md:text-lg">
             Empower your teams with automated infrastructure provisioning, deployment, and management. Build, scale, and
             secure your applications with enterprise-grade tools and best practices.
           </p>
-          <div className="flex gap-4 justify-center max-md:flex-col max-md:items-center max-md:gap-3">
+          {/*
+           <div className="flex gap-4 justify-center max-md:flex-col max-md:items-center max-md:gap-3">
             <button
               onClick={handleGetStarted}
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
@@ -96,11 +97,11 @@ export default function HomePage() {
             >
               Learn More
             </button>
-          </div>
+          </div> */}
         </section>
 
         {/* Service Cards */}
-        <section className="py-16">
+        <section className="py-0">
           <h2 className="text-3xl font-bold text-center mb-12 text-slate-100">Core Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {serviceCards.map((card, index) => (
@@ -112,7 +113,7 @@ export default function HomePage() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-16">
+        {/* <section className="py-16">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
             <div className="text-center">
               <div className="text-4xl font-bold text-blue-400 mb-2">99.9%</div>
@@ -131,7 +132,7 @@ export default function HomePage() {
               <div className="text-slate-400 text-sm font-medium">Support</div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Features Grid */}
         <section className="py-16">

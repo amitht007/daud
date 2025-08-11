@@ -74,6 +74,10 @@ export default function ProjectRequestsPage() {
             groupId: request.group_id,
             projectName: request.project_name,
             description: request.description,
+            maintainers: JSON.parse(request.maintainers || "[]"),
+            developers: JSON.parse(request.developers || "[]"),
+            techStack: request.techStack || "",
+            tags: JSON.parse(request.tags || "[]"),
           })
         });
         if (!createRes.ok) {
