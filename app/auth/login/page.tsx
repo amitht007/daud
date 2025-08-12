@@ -1,3 +1,4 @@
+"use client"
 // pages/auth/login/page.tsx
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"

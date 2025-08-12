@@ -177,8 +177,8 @@ export default function SecurityPage() {
     //     )}
     //   </div>
     // </div>
-    <div className="flex items-center top-50 justify-center h-screen bg-gray-900">
-    <h1 class="text-7xl mt-50 font-extrabold">Coming Soon !!!</h1>
+    <div className="flex items-center top-20 justify-center h-screen bg-gray-900">
+    <h1 class="text-7xl mt-20 font-extrabold">Coming Soon !!!</h1>
    </div>
   )
 }

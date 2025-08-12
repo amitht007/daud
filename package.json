@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
-    "@prisma/client": "^6.13.0",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
     "@radix-ui/react-aspect-ratio": "1.1.1",
@@ -46,6 +45,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
+    "critters": "^0.0.23",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
     "fs": "latest",
@@ -58,7 +58,6 @@
     "next-themes": "^0.4.4",
     "nodemailer": "^6.10.1",
     "path": "latest",
-    "prisma": "^6.13.0",
     "react": "^18",
     "react-day-picker": "9.8.0",
     "react-dom": "^18",
