@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server'
 
 // POST /api/gitlab/create-project
@@ -59,6 +58,30 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     let { groupId, projectName, description, maintainers = [], developers = [], techStack = '', tags = [] } = body;
+
+    // Normalize tags to always be an array
+    if (typeof tags === "string") {
+      try {
+        tags = JSON.parse(tags);
+      } catch {
+        tags = [];
+      }
+    }
+    if (!Array.isArray(tags)) {
+      tags = [];
+    }
+
+    // Normalize maintainers and developers to arrays
+    if (typeof maintainers === "string") {
+      try { maintainers = JSON.parse(maintainers); } catch { maintainers = []; }
+    }
+    if (!Array.isArray(maintainers)) maintainers = [];
+
+    if (typeof developers === "string") {
+      try { developers = JSON.parse(developers); } catch { developers = []; }
+    }
+    if (!Array.isArray(developers)) developers = [];
+
     if (!groupId || !projectName || !description) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
