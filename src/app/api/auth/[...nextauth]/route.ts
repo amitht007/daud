@@ -14,12 +14,20 @@ const handler = NextAuth({
       async authorize(credentials) {
         const db = await connectDB();
         const user = await db.collection("users").findOne({ email: credentials.email });
-        if (!user) return null;
-        // Debug: log password and hash
-        console.log("Login attempt:", credentials.email, credentials.password, user.password_hash);
+        if (!user) {
+          console.log("[AUTH] User not found for email:", credentials.email);
+          return null;
+        }
+        // Log the entered password and the hash from DB
+        console.log("[AUTH] Attempt login for:", credentials.email);
+        console.log("[AUTH] Entered password:", credentials.password);
+        console.log("[AUTH] Stored hash:", user.password_hash);
+
         const isValid = await bcrypt.compare(credentials.password, user.password_hash);
+        console.log("[AUTH] Password match result:", isValid);
+
         if (!isValid) {
-          console.log("Password mismatch");
+          console.log("[AUTH] Password mismatch for:", credentials.email);
           return null;
         }
         return {
