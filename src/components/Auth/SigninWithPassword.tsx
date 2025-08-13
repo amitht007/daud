@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import InputGroup from "../FormElements/InputGroup";
 import { Checkbox } from "../FormElements/checkbox";
+import { signIn } from "next-auth/react";
 
 export default function SigninWithPassword() {
   const [data, setData] = useState({
@@ -13,6 +14,7 @@ export default function SigninWithPassword() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -21,15 +23,21 @@ export default function SigninWithPassword() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // You can remove this code block
     setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    setError("");
+    const res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+    setLoading(false);
+    if (res?.error) {
+      setError("Invalid email or password");
+    } else {
+      window.location.href = "/";
+    }
   };
 
   return (
@@ -78,6 +86,10 @@ export default function SigninWithPassword() {
           Forgot Password?
         </Link>
       </div>
+
+      {error && (
+        <div className="mb-4 text-red-600 text-sm">{error}</div>
+      )}
 
       <div className="mb-4.5">
         <button

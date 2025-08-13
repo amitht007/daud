@@ -79,8 +79,8 @@ export function Sidebar() {
                 className="absolute left-3/4 right-4.5 top-1/2 -translate-y-1/2 text-right"
               >
                 <span className="sr-only">Close Menu</span>
-
                 <ArrowLeftIcon className="ml-auto size-7" />
+                
               </button>
             )}
           </div>
@@ -99,29 +99,7 @@ export function Sidebar() {
                       <li key={item.title}>
                         {item.items.length ? (
                           <div>
-                            <MenuItem
-                              isActive={item.items.some(
-                                ({ url }) => url === pathname,
-                              )}
-                              onClick={() => toggleExpanded(item.title)}
-                            >
-                              <item.icon
-                                className="size-6 shrink-0"
-                                aria-hidden="true"
-                              />
-
-                              <span>{item.title}</span>
-
-                              <ChevronUp
-                                className={cn(
-                                  "ml-auto rotate-180 transition-transform duration-200",
-                                  expandedItems.includes(item.title) &&
-                                    "rotate-0",
-                                )}
-                                aria-hidden="true"
-                              />
-                            </MenuItem>
-
+                           
                             {expandedItems.includes(item.title) && (
                               <ul
                                 className="ml-9 mr-0 space-y-1.5 pb-[15px] pr-0 pt-2"
@@ -129,13 +107,7 @@ export function Sidebar() {
                               >
                                 {item.items.map((subItem) => (
                                   <li key={subItem.title} role="none">
-                                    <MenuItem
-                                      as="link"
-                                      href={subItem.url}
-                                      isActive={pathname === subItem.url}
-                                    >
                                       <span>{subItem.title}</span>
-                                    </MenuItem>
                                   </li>
                                 ))}
                               </ul>
@@ -150,19 +122,14 @@ export function Sidebar() {
                                   item.title.toLowerCase().split(" ").join("-");
 
                             return (
-                              <MenuItem
-                                className="flex items-center gap-3 py-3"
-                                as="link"
-                                href={href}
-                                isActive={pathname === href}
-                              >
+                              <div className="flex items-center gap-2.5 text-sm font-medium text-dark-4 dark:text-dark-6">
                                 <item.icon
                                   className="size-6 shrink-0"
                                   aria-hidden="true"
                                 />
 
                                 <span>{item.title}</span>
-                              </MenuItem>
+                              </div>
                             );
                           })()
                         )}
