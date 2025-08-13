@@ -7,6 +7,12 @@ const AUTH_PAGES = ["/login", "/register", "/auth/login", "/auth/register"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+
+  // Always allow home page for unauthenticated users
+  if (pathname === "/") {
+    return NextResponse.next();
+  }
+
   // Allow public paths and static files
   if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
     return NextResponse.next();
