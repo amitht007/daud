@@ -86,8 +86,8 @@ export default function LoginPage() {
               ISU
             </div>
             <div className="text-left">
-              <div className="text-2xl font-bold text-slate-100">Self Service</div>
-              <div className="text-sm text-slate-400">Infra</div>
+              <div className="text-2xl font-bold text-slate-100">Self Service Infra</div>
+              {/* <div className="text-sm text-slate-400">Infra</div> */}
             </div>
           </Link>
         </div>

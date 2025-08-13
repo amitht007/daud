@@ -1,0 +1,27 @@
+{
+  "type": "Compass Connections",
+  "version": {
+    "$numberInt": "1"
+  },
+  "connections": [
+    {
+      "id": "a86206e0-e991-4b50-873b-4c3b714f1e10",
+      "lastUsed": {
+        "$date": {
+          "$numberLong": "1755064214726"
+        }
+      },
+      "favorite": {
+        "name": "172.16.0.12:27017",
+        "color": "color5"
+      },
+      "savedConnectionType": "favorite",
+      "connectionOptions": {
+        "connectionString": "mongodb://amit:Amit%401234@172.16.0.12:27017/?authSource=devops-secops",
+        "oidc": {
+          "serializedState": "eyJvaWRjUGx1Z2luU3RhdGVWZXJzaW9uIjoxLCJzdGF0ZSI6W119"
+        }
+      }
+    }
+  ]
+}
