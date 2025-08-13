@@ -50,8 +50,8 @@ const handler= NextAuth({
   
   // Custom pages for sign in and sign up
   pages: {
-    signIn: '/auth/login',
-    signUp: '/auth/register',
+    signIn: '/login',
+    // signUp: '/register',
   },
   
 

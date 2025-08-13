@@ -127,8 +127,8 @@ export default function GitlabServicesPage() {
 
     return (
       <div className="relative">
-        <label className="block text-slate-300 mb-1">{label}</label>
-        <div className="flex flex-wrap gap-1 bg-slate-900 border border-slate-700 rounded px-2 py-1">
+        <label className="block text-slate-300 mb-1 text-sm">{label}</label>
+        <div className="flex flex-wrap gap-1 bg-slate-900 border border-slate-700 rounded px-2 py-1.5 min-h-[38px]">
           {value.map((entry, idx) => (
             <span key={entry} className="bg-blue-700 text-white px-2 py-0.5 rounded text-xs flex items-center">
               {entry}
@@ -137,7 +137,7 @@ export default function GitlabServicesPage() {
           ))}
           <input
             ref={inputRef}
-            className="bg-transparent outline-none text-slate-100 flex-1 min-w-[100px]"
+            className="bg-transparent outline-none text-slate-100 flex-1 min-w-[100px] text-sm"
             value={input}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
@@ -147,11 +147,11 @@ export default function GitlabServicesPage() {
           />
         </div>
         {showSuggestions && suggestions.length > 0 && (
-          <ul className="absolute z-10 left-0 right-0 bg-slate-800 border border-slate-700 rounded mt-1 max-h-40 overflow-y-auto">
+          <ul className="absolute z-10 left-0 right-0 bg-slate-800 border border-slate-700 rounded mt-1 max-h-32 overflow-y-auto">
             {suggestions.map((entry) => (
               <li
                 key={entry}
-                className="px-3 py-2 cursor-pointer hover:bg-blue-800 text-slate-100"
+                className="px-3 py-1.5 cursor-pointer hover:bg-blue-800 text-slate-100 text-sm"
                 onClick={() => handleSuggestionClick(entry)}
               >
                 {entry}
@@ -213,102 +213,117 @@ export default function GitlabServicesPage() {
     form.developers.length > 0;
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center px-4">
-      <Card className="w-full max-w-xl bg-slate-800 border border-slate-700 shadow-lg">
-        <CardHeader>
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+      <Card className="w-full max-w-5xl bg-slate-800 border border-slate-700 shadow-lg">
+        <CardHeader className="pb-4">
           <CardTitle className="text-blue-400 text-2xl">Request a New GitLab Project</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <Label htmlFor="email" className="text-slate-200">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                required
-                value={form.email}
-                onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                className="mt-1 bg-slate-900 border-slate-700 text-slate-100"
-                placeholder="your@email.com"
-              />
+          <div className="space-y-4">
+            {/* Row 1: Email and Project Name */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1">
+                <Label htmlFor="email" className="text-slate-200 text-sm">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                  className="mt-1 bg-slate-900 border-slate-700 text-slate-100 h-9"
+                  placeholder="your@email.com"
+                />
+              </div>
+              <div className="flex-1">
+                <Label htmlFor="projectName" className="text-slate-200 text-sm">Project Name</Label>
+                <Input
+                  id="projectName"
+                  type="text"
+                  required
+                  value={form.projectName}
+                  onChange={e => setForm(f => ({ ...f, projectName: e.target.value }))}
+                  className="mt-1 bg-slate-900 border-slate-700 text-slate-100 h-9"
+                  placeholder="Name of the new project"
+                />
+              </div>
             </div>
-            <div>
-              <Label htmlFor="group" className="text-slate-200">GitLab Group or Subgroup</Label>
-              <Input
-                id="group"
-                type="text"
-                required
-                autoComplete="off"
-                value={form.group}
-                onChange={handleGroupInput}
-                className="mt-1 bg-slate-900 border-slate-700 text-slate-100"
-                placeholder="Search for group..."
-              />
-              {loadingGroups && <div className="text-xs text-blue-300 mt-1">Searching...</div>}
-              {groupSuggestions.length > 0 && (
-                <ul className="bg-slate-700 rounded mt-1 max-h-40 overflow-y-auto border border-slate-600">
-                  {groupSuggestions.map((g) => (
-                    <li
-                      key={g.id}
-                      className="px-3 py-2 cursor-pointer hover:bg-blue-800 text-slate-100"
-                      onClick={() => selectGroup(g)}
-                    >
-                      {g.full_path}
-                    </li>
-                  ))}
-                </ul>
-              )}
+
+            {/* Row 2: GitLab Group and Tech Stack */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 relative">
+                <Label htmlFor="group" className="text-slate-200 text-sm">GitLab Group or Subgroup</Label>
+                <Input
+                  id="group"
+                  type="text"
+                  required
+                  autoComplete="off"
+                  value={form.group}
+                  onChange={handleGroupInput}
+                  className="mt-1 bg-slate-900 border-slate-700 text-slate-100 h-9"
+                  placeholder="Search for group..."
+                />
+                {loadingGroups && <div className="text-xs text-blue-300 mt-1">Searching...</div>}
+                {groupSuggestions.length > 0 && (
+                  <ul className="absolute z-10 left-0 right-0 bg-slate-700 rounded mt-1 max-h-32 overflow-y-auto border border-slate-600">
+                    {groupSuggestions.map((g) => (
+                      <li
+                        key={g.id}
+                        className="px-3 py-1.5 cursor-pointer hover:bg-blue-800 text-slate-100 text-sm"
+                        onClick={() => selectGroup(g)}
+                      >
+                        {g.full_path}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div className="flex-1">
+                <Label htmlFor="techStack" className="text-slate-200 text-sm">Tech Stack</Label>
+                <Input
+                  id="techStack"
+                  type="text"
+                  value={form.techStack}
+                  onChange={e => setForm(f => ({ ...f, techStack: e.target.value }))}
+                  className="mt-1 bg-slate-900 border-slate-700 text-slate-100 h-9"
+                  placeholder="e.g. React, Node.js, Python"
+                />
+              </div>
             </div>
+
+            {/* Row 3: Description (full width) */}
             <div>
-              <Label htmlFor="projectName" className="text-slate-200">Project Name</Label>
-              <Input
-                id="projectName"
-                type="text"
-                required
-                value={form.projectName}
-                onChange={e => setForm(f => ({ ...f, projectName: e.target.value }))}
-                className="mt-1 bg-slate-900 border-slate-700 text-slate-100"
-                placeholder="Name of the new project"
-              />
-            </div>
-            <div>
-              <Label htmlFor="description" className="text-slate-200">Description</Label>
+              <Label htmlFor="description" className="text-slate-200 text-sm">Description</Label>
               <textarea
                 id="description"
                 required
                 value={form.description}
                 onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                className="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 text-slate-100 p-2 min-h-[80px]"
+                className="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 text-slate-100 p-2 h-20 text-sm resize-none"
                 placeholder="Describe the project and its purpose"
               />
             </div>
-            <div>
-              <TagInput
-                label="Maintainers"
-                value={form.maintainers}
-                onChange={handleMaintainersChange}
-                excludeList={form.developers}
-              />
+
+            {/* Row 4: Maintainers and Developers */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1">
+                <TagInput
+                  label="Maintainers"
+                  value={form.maintainers}
+                  onChange={handleMaintainersChange}
+                  excludeList={form.developers}
+                />
+              </div>
+              <div className="flex-1">
+                <TagInput
+                  label="Developers"
+                  value={form.developers}
+                  onChange={handleDevelopersChange}
+                  excludeList={form.maintainers}
+                />
+              </div>
             </div>
-            <div>
-              <TagInput
-                label="Developers"
-                value={form.developers}
-                onChange={handleDevelopersChange}
-                excludeList={form.maintainers}
-              />
-            </div>
-            <div>
-              <Label htmlFor="techStack" className="text-slate-200">Tech Stack</Label>
-              <Input
-                id="techStack"
-                type="text"
-                value={form.techStack}
-                onChange={e => setForm(f => ({ ...f, techStack: e.target.value }))}
-                className="mt-1 bg-slate-900 border-slate-700 text-slate-100"
-                placeholder="e.g. React, Node.js, Python"
-              />
-            </div>
+
+            {/* Row 5: Tags (full width) */}
             <div>
               <TagInput
                 label="Tags (e.g. frontend, backend, rnd)"
@@ -318,29 +333,18 @@ export default function GitlabServicesPage() {
                 suggestionsList={["frontend", "backend", "rnd"]}
               />
             </div>
-            {error && <div className="text-red-400 text-sm">{error}</div>}
-            {success && <div className="text-green-400 text-sm">{success}</div>}
-            <Button type="submit" disabled={submitting || !isFormValid} className="w-full bg-blue-600 hover:bg-blue-700">
-              {submitting ? "Submitting..." : "Submit Request"}
-            </Button>
-          </form>
+
+            {/* Messages and Submit */}
+            <div className="pt-2 space-y-3">
+              {error && <div className="text-red-400 text-sm">{error}</div>}
+              {success && <div className="text-green-400 text-sm">{success}</div>}
+              <Button type="button" onClick={handleSubmit} disabled={submitting || !isFormValid} className="w-full bg-blue-600 hover:bg-blue-700 h-10">
+                {submitting ? "Submitting..." : "Submit Request"}
+              </Button>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>
   );
 }
-
-// ---
-// Backend API endpoints you need to implement:
-//
-// 1. /api/gitlab/groups?search=...  (GET)
-//    - Calls GitLab API (gitlab.txninfra.com) with the access token from .env.locale
-//    - Returns group suggestions for autosuggest
-//
-// 2. /api/gitlab/project-request  (POST)
-//    - Saves the request to your DB (for admin approval)
-//    - Should include email, group, groupId, description, projectName
-//
-// 3. On admin approval (in approvals page), call your backend endpoint to create the project in GitLab using the access token.
-//
-// See the comments above for integration points.

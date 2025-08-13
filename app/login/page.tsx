@@ -86,8 +86,8 @@ export default function LoginPage() {
               ISU
             </div>
             <div className="text-left">
-              <div className="text-2xl font-bold text-slate-100">Infrastructure</div>
-              <div className="text-sm text-slate-400">Platform</div>
+              <div className="text-2xl font-bold text-slate-100">Self Service</div>
+              <div className="text-sm text-slate-400">Infra</div>
             </div>
           </Link>
         </div>
@@ -154,18 +154,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Demo Credentials */}
-        <div className="mt-6 bg-slate-800/50 rounded-lg p-4 border border-slate-700">
-          <h3 className="text-slate-100 font-medium mb-2">Demo Credentials:</h3>
-          <div className="text-sm text-slate-300 space-y-1">
-            <div>
-              <strong>Admin:</strong> username: "admin", password: any
-            </div>
-            <div>
-              <strong>User:</strong> username: anything else, password: any
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )
