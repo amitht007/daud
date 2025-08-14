@@ -11,14 +11,14 @@ const bannerItems = [
 
 export default function Banner() {
   return (
-    <div className="mt-20 bg-slate-800/90 backdrop-blur-md border-y border-slate-700 h-[60px] flex items-center relative overflow-hidden">
+    <div className="mt-20 bg-slate-100/90 dark:bg-slate-800/90 backdrop-blur-md border-y border-slate-300 dark:border-slate-700 h-[60px] flex items-center relative overflow-hidden">
       {/* Animate the banner using a custom keyframes class */}
       <div className="flex absolute animate-banner-scroll whitespace-nowrap will-change-transform">
         {[...Array(3)].flatMap((_, i) =>
           bannerItems.map((item, index) => (
             <div
               key={`${i}-${index}`}
-              className="text-blue-400 font-mono font-medium mx-16 text-base flex-shrink-0 uppercase tracking-wider"
+              className="text-blue-700 dark:text-blue-400 font-mono font-medium mx-16 text-base flex-shrink-0 uppercase tracking-wider"
             >
               {item}
             </div>
@@ -26,8 +26,8 @@ export default function Banner() {
         )}
       </div>
       <div className="absolute right-8 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-        <span className="text-green-400 text-xs font-mono uppercase">Operational</span>
+        <div className="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full animate-pulse"></div>
+        <span className="text-green-600 dark:text-green-400 text-xs font-mono uppercase">Operational</span>
       </div>
     </div>
   )
