@@ -23,13 +23,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className="relative flex flex-col min-h-screen bg-white dark:bg-[#020d1a]">
         <Providers>
           <NextTopLoader color="#5750F1" showSpinner={false} />
           <Header />
-          <div className="flex min-h-[calc(100vh-64px-64px)] bg-white dark:bg-[#020d1a]">
+          {/* Use flex-1 on a wrapper to push footer down, and ensure sidebar/content are between header/footer */}
+          <div className="flex-1 flex flex-row bg-white dark:bg-[#020d1a] min-h-0">
             <Sidebar />
-            <main className="flex-1 flex flex-col">
+            <main className="flex-1 flex flex-col min-h-0">
               {/* children will fill the remaining space between header and footer */}
               {children}
             </main>

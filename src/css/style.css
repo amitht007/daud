@@ -478,3 +478,11 @@ input[type="search"]::-webkit-search-cancel-button {
 .custom-gradient-1 {
   background-image: linear-gradient(145deg, #eef 0%, #fff8fc 100%);
 }
+
+@keyframes banner-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+.animate-banner-scroll {
+  animation: banner-scroll 30s linear infinite;
+}

@@ -38,16 +38,17 @@ export function Sidebar() {
                 "h-full"
               ]
             : [
-                "relative h-full",
+                // Sticky sidebar for desktop
+                "sticky top-[64px] h-[calc(100vh-128px)]",
                 sidebarWidth
               ]
         )}
         aria-label="Sidebar"
         style={{
-          // Ensure sidebar doesn't overlap header/footer in desktop
+          // Remove manual top/bottom/height for desktop, only for mobile
           top: isMobile ? 0 : undefined,
           bottom: isMobile ? 0 : undefined,
-          height: isMobile ? "100vh" : "100%",
+          height: isMobile ? "100vh" : undefined,
         }}
       >
         <div className="flex flex-col flex-1">
