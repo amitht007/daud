@@ -7,6 +7,8 @@ import { useSidebarContext } from "../sidebar/sidebar-context";
 import { MenuIcon } from "./icons";
 import { ThemeToggleSwitch } from "./theme-toggle";
 import { UserInfo } from "./user-info";
+import {RequireRole} from "../../../../src/components/Auth/RequireRole"
+
 
 // Navigation items
 export const navigationItems = [
@@ -15,6 +17,7 @@ export const navigationItems = [
   { name: "PATTERN HUB", href: "/patterns", icon: "🔧" },
   { name: "MODEL HUB", href: "/models", icon: "🤖" },
   { name: "SECURITY", href: "/security", icon: "🛡️" },
+  { name: "podXs", href: "/podxs", icon: "🤖" },
 ];
 
 export function Header() {
@@ -25,7 +28,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-stroke bg-white shadow-1 dark:border-stroke-dark dark:bg-gray-dark">
+    <header className="sticky top-0 z-50 w-full border-b border-stroke bg-white shadow-1 dark:border-stroke-dark dark:bg-gray-dark">
       <div className="flex items-center justify-between px-4 py-2 md:px-5 2xl:px-10">
         {/* Sidebar toggle for mobile */}
         <div className="flex items-center gap-2 min-w-0">
@@ -69,7 +72,18 @@ export function Header() {
               <span>{item.name}</span>
             </Link>
           ))}
+
+          {/* <RequireRole role="admin">            
+              <Link
+                href="/admin/approvals"
+                className="flex items-center gap-2 px-4 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-800/50 rounded-lg transition-all duration-300 font-medium"
+              >
+                <span className="text-sm">⏳</span>
+                APPROVALS
+              </Link>  
+          </RequireRole> */}
         </nav>
+        
 
         {/* User controls */}
         <div className="flex items-center gap-2 min-[375px]:gap-4 ml-auto">

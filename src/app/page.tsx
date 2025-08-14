@@ -4,7 +4,8 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Banner from "@/components/ui/banner"
 import { setupCardAnimations } from "@/utils/animations"
-// Add FAQSection import
+// import { serviceCards } from "@/data/services"
+// import ServiceCard from "@/components/ui/service-card"
 import FAQSection from "./FAQSection"
 
 export default function HomePage() {
@@ -50,6 +51,18 @@ export default function HomePage() {
           </p>
         </section>
 
+
+            
+         <section className="py-0">
+          <h2 className="text-5xl font-bold text-center mb-12 text-slate-800 dark:text-slate-100">Core Services</h2>
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {serviceCards.map((card, index) => (
+              <div key={index} onClick={() => handleServiceClick(card.route)}>
+                <ServiceCard {...card} />
+              </div>
+            ))}
+          </div> */}
+          </section>
         {/* Features Section */}
         <section className="py-16">
           <h2 className="text-3xl font-bold text-center mb-12 text-slate-800 dark:text-slate-100">Key Features</h2>

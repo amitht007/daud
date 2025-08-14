@@ -13,12 +13,10 @@ export default function SignIn() {
     <>
       <Breadcrumb pageName="Sign In" />
 
-      <div className="flex min-h-[60vh] items-center justify-center">
+      <div className="flex items-center justify-center mt-40">
         <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card w-full max-w-md">
-          <div className="w-fit">
-            <div className="w-fit p-4 sm:p-12.5 xl:p-15">
+          <div className="w-fit w-full p-10">
               <Signin />
-            </div>
           </div>
         </div>
       </div>
