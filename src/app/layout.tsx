@@ -27,15 +27,14 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <Providers>
           <NextTopLoader color="#5750F1" showSpinner={false} />
           <Header />
-          <div className="flex min-h-screen bg-white dark:bg-[#020d1a]">
+          <div className="flex min-h-[calc(100vh-64px-64px)] bg-white dark:bg-[#020d1a]">
             <Sidebar />
-            <main className="flex-1 flex flex-col min-h-[calc(100vh-64px-64px)]">
-              <div className="flex-1 flex flex-col">
-                {children}
-              </div>
-              <Footer />
+            <main className="flex-1 flex flex-col">
+              {/* children will fill the remaining space between header and footer */}
+              {children}
             </main>
           </div>
+          <Footer />
         </Providers>
       </body>
     </html>

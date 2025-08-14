@@ -57,7 +57,8 @@ export function Header() {
         </div>
       </div>
 
-       <nav className="flex gap-20 mx-24">
+       {/* Center navigation by using absolute positioning and left-1/2 translate-x-1/2 */}
+      <nav className="absolute left-1/2 -translate-x-1/2 flex gap-20">
         {navigationItems.map((item) => (
           <Link
             key={item.name}
