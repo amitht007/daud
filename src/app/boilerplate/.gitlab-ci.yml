@@ -1,0 +1,30 @@
+include:
+  - local: deploy-template.yml
+    inputs:
+      website: my-website.example.com
+# - test
+# sast:
+#   stage: test
+# include:
+# - template: Security/SAST.gitlab-ci.yml
+
+# build_for_mr:
+#   script:
+#     - echo "Building MR from dev or release or feature_ branch"
+#   rules:
+#     - if: |
+#         $CI_PIPELINE_SOURCE == "merge_request_event" &&
+#         ($CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "dev" ||
+#          $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^release-/)
+#       when: on_success
+
+build_for_mr:
+  script:
+    - echo "Building MR from dev or release or feature_ branch"
+  rules:
+    - if: |
+        $CI_PIPELINE_SOURCE == "merge_request_event" &&
+        ($CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "dev" ||
+         $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^release-/)
+      when: on_success
+

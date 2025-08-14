@@ -1,0 +1,108 @@
+@Library("devops-pipeline-lib@dsl-library-v1.0.0") _
+
+Main([
+    applicationName:"{{aplicationName}}",
+    
+    // language of the application, can be "java", "python", "nodejs", 
+    language: "{{language}}",
+
+    // container_port for the application
+    containerPort: "8080",
+
+    // for deploying stage on premises, set to true
+    onprem_stage: "false",
+
+    // Resource requests and limits
+    resources: [
+        memoryRequest: "250Mi",
+        cpuRequest: "250m",
+        memoryLimit: "500Mi", 
+        cpuLimit: "500m",
+        replicaCount: "1"
+    ],
+    
+
+    notifications: [
+    // approvers for the pipeline
+        teamLead: "sonaliparida",
+    // email notifications
+        emailRecipients: "sonali.parida@iserveu.co.in",
+    ],
+    
+
+// labels and selectors for the Kubernetes deployment
+    metadata: [
+        // for authentication, set to "auth" or "no-auth" or if both "auth,no-auth" this is for gateway
+        authStatus: "no-auth",
+        // for application type, set to "backend" or "frontend" 
+        applicationType: "backend",
+        // for example kotak, bob, ta, 
+        organizationName: "ta"
+    ],
+    
+    // environments configuration
+    // ====< TO BE MAINTAINED BY DEVOPS TEAM >====
+    environments: [
+        dev: [
+            project: "isu-internal",
+            region: "asia-south1-a",
+            cluster: "kubernetes-uat-cluster",
+            namespace: "default",
+            credentialsId: "k8-jenkins-deployment",
+            artifactCredsId: "isu-internal-artifact",
+            registryLocation: "asia-docker.pkg.dev",
+            repositoryName: "asia.gcr.io"
+        ],
+        stage: [
+            project: "isu-internal",
+            region: "asia-south1-a",
+            cluster: "kubernetes-uat-cluster",
+            namespace: "default",
+            credentialsId: "k8-jenkins-deployment",
+            artifactCredsId: "isu-internal-artifact",
+            registryLocation: "asia-docker.pkg.dev",
+            repositoryName: "asia.gcr.io"
+        ],
+        onprem_stage: [
+            project: "isu-internal",
+            region: "asia-south1-a",
+            cluster: "kubernetes-uat-cluster",
+            namespace: "default",
+            credentialsId: "k8-jenkins-deployment",
+            artifactCredsId: "isu-internal-artifact",
+            registryLocation: "asia-docker.pkg.dev",
+            repositoryName: "asia.gcr.io"
+        ],
+        uat: [
+            project: "isu-sso",
+            region: "asia-south2-a",
+            cluster: "isu-dr-uat-cluster",
+            namespace: "default",
+            credentialsId: "isu-sso-id",
+            artifactCredsId: "uat-artifactregistry",
+            registryLocation: "asia-docker.pkg.dev",
+            repositoryName: "asia.gcr.io"
+        ],
+        release: [
+            project: "creditapp-29bf2",
+            region: "asia-south1-a",
+            cluster: "isu-prod-internal-cluster",
+            namespace: "default",
+            credentialsId: "k8-Prod-jenkins-cred",
+            artifactCredsId: "creditapp-artifactregistry",
+            registryLocation: "asia-docker.pkg.dev",
+            repositoryName: "asia.gcr.io"
+        ]
+        ,
+        dr: [
+             project: "creditapp-29bf2",
+            region: "asia-south2-a",
+            cluster: "isu-prod-internal-cluster",
+            namespace: "default",
+            credentialsId: "k8-Prod-jenkins-cred",
+            artifactCredsId: "creditapp-artifactregistry",
+            registryLocation: "asia-docker.pkg.dev",
+            repositoryName: "asia.gcr.io"
+        ]]
+    ]
+)

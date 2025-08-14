@@ -127,8 +127,8 @@ export default function GitlabServicesPage() {
 
     return (
       <div className="relative">
-        <label className="block text-slate-300 mb-1 text-sm">{label}</label>
-        <div className="flex flex-wrap gap-1 bg-slate-900 border border-slate-700 rounded px-2 py-1.5 min-h-[38px]">
+        <label className="text-slate-600 dark:text-slate-200 text-sm">{label}</label>
+        <div className="flex flex-wrap gap-1 text-slate-800 dark:bg-slate-900 dark:text-slate-200 border border-slate-700 rounded px-2 py-1.5 min-h-[38px]">
           {value.map((entry, idx) => (
             <span key={entry} className="bg-blue-700 text-white px-2 py-0.5 rounded text-xs flex items-center">
               {entry}
@@ -137,7 +137,7 @@ export default function GitlabServicesPage() {
           ))}
           <input
             ref={inputRef}
-            className="bg-transparent outline-none text-slate-100 flex-1 min-w-[100px] text-sm"
+            className="bg-transparent outline-none text-slate-600 flex-1 min-w-[100px] text-sm dark:text-slate-100"
             value={input}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
@@ -213,36 +213,36 @@ export default function GitlabServicesPage() {
     form.developers.length > 0;
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-      <Card className="w-full max-w-5xl bg-slate-800 border border-slate-700 shadow-lg">
+    <div className="min-h-screen bg-gray-2 dark:bg-[#020d1a] flex items-center justify-center p-4">
+      <Card className="w-full max-w-5xl bg-slate-100/70 dark:bg-slate-800/50  border border-slate-700 shadow-lg">
         <CardHeader className="pb-4">
-          <CardTitle className="text-blue-400 text-2xl">Request a New GitLab Project</CardTitle>
+          <CardTitle className="text-slate-800 dark:text-slate-200 text-2xl">Request a New GitLab Project</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {/* Row 1: Email and Project Name */}
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">
-                <Label htmlFor="email" className="text-slate-200 text-sm">Email</Label>
+                <Label htmlFor="email" className="text-slate-600 dark:text-slate-200 text-sm">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   required
                   value={form.email}
                   onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                  className="mt-1 bg-slate-900 border-slate-700 text-slate-100 h-9"
+                  className="mt-1 bg-slate-100 dark:bg-slate-900 border-slate-700 text-slate-100 h-9"
                   placeholder="your@email.com"
                 />
               </div>
               <div className="flex-1">
-                <Label htmlFor="projectName" className="text-slate-200 text-sm">Project Name</Label>
+                <Label htmlFor="projectName" className="text-slate-600 dark:text-slate-200 text-sm">Project Name</Label>
                 <Input
                   id="projectName"
                   type="text"
                   required
                   value={form.projectName}
                   onChange={e => setForm(f => ({ ...f, projectName: e.target.value }))}
-                  className="mt-1 bg-slate-900 border-slate-700 text-slate-100 h-9"
+                  className="mt-1 bg-slate-100 dark:bg-slate-900 border-slate-700 text-slate-100 h-9"
                   placeholder="Name of the new project"
                 />
               </div>
@@ -251,7 +251,7 @@ export default function GitlabServicesPage() {
             {/* Row 2: GitLab Group and Tech Stack */}
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 relative">
-                <Label htmlFor="group" className="text-slate-200 text-sm">GitLab Group or Subgroup</Label>
+                <Label htmlFor="group" className="text-slate-600 dark:text-slate-200 text-sm">GitLab Group or Subgroup</Label>
                 <Input
                   id="group"
                   type="text"
@@ -259,10 +259,10 @@ export default function GitlabServicesPage() {
                   autoComplete="off"
                   value={form.group}
                   onChange={handleGroupInput}
-                  className="mt-1 bg-slate-900 border-slate-700 text-slate-100 h-9"
+                  className="mt-1 bg-slate-100 dark:bg-slate-900 border-slate-700 text-slate-100 h-9"
                   placeholder="Search for group..."
                 />
-                {loadingGroups && <div className="text-xs text-blue-300 mt-1">Searching...</div>}
+                {loadingGroups && <div className="text-xs bg-slate-100 dark:bg-slate-900 mt-1">Searching...</div>}
                 {groupSuggestions.length > 0 && (
                   <ul className="absolute z-10 left-0 right-0 bg-slate-700 rounded mt-1 max-h-32 overflow-y-auto border border-slate-600">
                     {groupSuggestions.map((g) => (
@@ -278,13 +278,13 @@ export default function GitlabServicesPage() {
                 )}
               </div>
               <div className="flex-1">
-                <Label htmlFor="techStack" className="text-slate-200 text-sm">Tech Stack</Label>
+                <Label htmlFor="techStack" className="text-slate-600 dark:text-slate-200 text-sm">Tech Stack</Label>
                 <Input
                   id="techStack"
                   type="text"
                   value={form.techStack}
                   onChange={e => setForm(f => ({ ...f, techStack: e.target.value }))}
-                  className="mt-1 bg-slate-900 border-slate-700 text-slate-100 h-9"
+                  className="mt-1 bg-slate-100 dark:bg-slate-900 border-slate-700 text-slate-100 h-9"
                   placeholder="e.g. React, Node.js, Python"
                 />
               </div>
@@ -292,13 +292,15 @@ export default function GitlabServicesPage() {
 
             {/* Row 3: Description (full width) */}
             <div>
-              <Label htmlFor="description" className="text-slate-200 text-sm">Description</Label>
+              <Label htmlFor="description" className="text-slate-600 dark:text-slate-200 text-sm">Description</Label>
               <textarea
                 id="description"
                 required
                 value={form.description}
                 onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                className="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 text-slate-100 p-2 h-20 text-sm resize-none"
+                className="mt-1 w-full rounded-md 
+                text-slate-800 dark:text-slate-200 bg-slate-100  dark:bg-slate-900 border border-slate-700 dark:border-slate-600 focus:ring-blue-500 focus:border-blue-500
+                dark:bg-slate-900 border border-slate-700 dark:text-slate-100 p-2 h-20 text-sm resize-none"
                 placeholder="Describe the project and its purpose"
               />
             </div>

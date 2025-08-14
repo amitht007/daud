@@ -2,7 +2,7 @@
 
 export default function ServiceCard({ icon, title, description }) {
   return (
-    <div className="service-card group relative bg-slate-800/50 backdrop-blur-sm rounded-lg overflow-hidden border border-slate-700 shadow-lg transition-all duration-500 cursor-pointer hover:shadow-xl hover:scale-105 hover:border-blue-500/50">
+    <div className="service-card group relative bg-slate-100/70 dark:bg-slate-800/50 backdrop-blur-sm rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 hover:border-blue-500/50">
       <div className="relative z-10 p-8">
         {/* Icon with gradient design */}
         <div className="relative w-16 h-16 mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -11,12 +11,12 @@ export default function ServiceCard({ icon, title, description }) {
         </div>
 
         {/* Title */}
-        <div className="text-xl font-bold mb-4 text-slate-100 group-hover:text-blue-400 transition-colors duration-300">
+        <div className="text-xl font-bold mb-4 text-slate-800 dark:text-slate-100 group-hover:text-blue-400 transition-colors duration-300">
           {title}
         </div>
 
         {/* Description */}
-        <div className="text-slate-300 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
+        <div className="text-slate-800 dark:text-slate-100 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
           {description}
         </div>
       </div>

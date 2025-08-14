@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
-import { dbHelpers } from "@/lib/db"
-import { authHelpers } from "@/lib/auth"
+import { dbHelpers } from "../../../../../lib/db"
+import { authHelpers } from "../../../../../lib/auth"
 
 export async function PATCH(request, { params }) {
   try {
@@ -23,12 +23,18 @@ export async function PATCH(request, { params }) {
     }
 
     const { status, rejectionReason } = await request.json()
+    if (!status) {
+      return NextResponse.json({ error: "Missing status parameter" }, { status: 400 })
+    }
     const requestId = params.id
 
-    const result = dbHelpers.updateRequestStatus(requestId, status, user.id, rejectionReason)
+    const result = await dbHelpers.updateRequestStatus(requestId, status, user.id, rejectionReason)
+    if (!result) {
+      return NextResponse.json({ error: "Failed to update request status" }, { status: 500 })
+    }
 
     // Log the action
-    dbHelpers.logAction(
+    await dbHelpers.logAction(
       user.id,
       "UPDATE_REQUEST_STATUS",
       "INFRASTRUCTURE_REQUEST",
@@ -38,10 +44,14 @@ export async function PATCH(request, { params }) {
       null,
     )
 
-    return NextResponse.json({
-      success: true,
-      message: `Request ${status} successfully`,
-    })
+    return NextResponse.json(
+      {
+        success: true,
+        message: `Request ${status} successfully`,
+        data: result,
+      },
+      { status: 200 },
+    )
   } catch (error) {
     console.error("Update request error:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })

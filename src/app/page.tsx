@@ -4,8 +4,8 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Banner from "@/components/ui/banner"
 import { setupCardAnimations } from "@/utils/animations"
-// import { serviceCards } from "@/data/services"
-// import ServiceCard from "@/components/ui/service-card"
+import { serviceCards } from "../data/services"
+import ServiceCard from "../components/ui/service-card"
 import FAQSection from "./FAQSection"
 
 export default function HomePage() {
@@ -20,7 +20,11 @@ export default function HomePage() {
         setExpandedPattern(null)
         document.body.style.overflow = "auto"
       }
+      
     }
+
+  
+
     document.addEventListener("keydown", handleEscape)
 
     return () => {
@@ -32,6 +36,10 @@ export default function HomePage() {
   const handlePatternClose = () => {
     setExpandedPattern(null)
     document.body.style.overflow = "auto"
+  }
+
+    const handleServiceClick = (route: string) => {
+    router.push(route)
   }
 
   return (
@@ -55,13 +63,13 @@ export default function HomePage() {
             
          <section className="py-0">
           <h2 className="text-5xl font-bold text-center mb-12 text-slate-800 dark:text-slate-100">Core Services</h2>
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {serviceCards.map((card, index) => (
               <div key={index} onClick={() => handleServiceClick(card.route)}>
                 <ServiceCard {...card} />
               </div>
             ))}
-          </div> */}
+          </div>
           </section>
         {/* Features Section */}
         <section className="py-16">

@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server"
-import { dbHelpers } from "../../../lib/db"
-import { authHelpers } from "../../../lib/auth"
+import { dbHelpers } from "../../../../lib/db"
+import { authHelpers } from "../../../../lib/auth"
 
 export async function POST(request) {
   console.log('[REQUESTS] ROUTE: POST /api/requests called');
   try {
     console.log('[REQUESTS] Importing next-auth/next and authOptions...');
     const { getServerSession } = await import("next-auth/next");
-    const { authOptions } = await import("../../../lib/auth");
+    const { authOptions } = await import("../../../../lib/auth");
     console.log('[REQUESTS] getServerSession and authOptions imported');
     console.log('[REQUESTS] Checking session...');
     const session = await getServerSession({ req: request, ...authOptions });
@@ -17,6 +17,8 @@ export async function POST(request) {
       return NextResponse.json({ error: "Authentication required" }, { status: 401 });
     }
     const user = session.user;
+    // Fix: get user id (try id, fallback to email)
+    const userId = user.id || user.email;
     console.log('[REQUESTS] User:', user);
     console.log('[REQUESTS] Parsing request body...');
     const requestData = await request.json()
@@ -27,20 +29,18 @@ export async function POST(request) {
     // Insert all request data as JSON string in 'item' field
     const newRequest = {
       item: JSON.stringify({ ...requestData, request_id: requestId }),
-      user_id: user.id,
+      user_id: userId,
       status: 'pending',
     }
     console.log('[REQUESTS] New request object:', newRequest)
-    const dbModule = await import("../../../lib/db");
-    console.log('[REQUESTS] dbModule imported:', Object.keys(dbModule));
-    console.log('[REQUESTS] Calling dbHelpers.createRequest...');
-    const result = dbModule.dbHelpers.createRequest(newRequest)
+    // Fix: use imported dbHelpers directly
+    const result = dbHelpers.createRequest(newRequest)
     console.log('[REQUESTS] DB result:', result)
     // Log the action (should be a no-op)
-    if (typeof dbModule.dbHelpers.logAction === 'function') {
+    if (typeof dbHelpers.logAction === 'function') {
       console.log('[REQUESTS] Calling dbHelpers.logAction...');
-      dbModule.dbHelpers.logAction(
-        user.id,
+      dbHelpers.logAction(
+        userId,
         "CREATE_REQUEST",
         "INFRASTRUCTURE_REQUEST",
         requestId,
@@ -50,7 +50,7 @@ export async function POST(request) {
       )
       console.log('[REQUESTS] Action logged for request:', requestId)
     } else {
-      console.log('[REQUESTS] logAction is not a function:', dbModule.dbHelpers.logAction)
+      console.log('[REQUESTS] logAction is not a function:', dbHelpers.logAction)
     }
     console.log('[REQUESTS] Returning success response...');
     return NextResponse.json({

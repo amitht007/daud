@@ -73,15 +73,15 @@ export function Header() {
             </Link>
           ))}
 
-          {/* <RequireRole role="admin">            
+          <RequireRole role="admin">            
               <Link
                 href="/admin/approvals"
-                className="flex items-center gap-2 px-4 py-2 text-slate-300 hover:text-blue-400 hover:bg-slate-800/50 rounded-lg transition-all duration-300 font-medium"
+                className="flex items-center gap-2 px-4 py-2 text-slate-800 hover:text-blue-400 hover:bg-slate-800/50 rounded-lg transition-all duration-300 font-medium dark:text-slate-200 dark:hover:text-blue-400 dark:hover:bg-slate-800/50"
               >
                 <span className="text-sm">⏳</span>
                 APPROVALS
               </Link>  
-          </RequireRole> */}
+          </RequireRole>
         </nav>
         
 
