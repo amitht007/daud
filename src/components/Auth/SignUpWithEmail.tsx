@@ -9,6 +9,7 @@ export default function SignUpWithEmail() {
   const [data, setData] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
     remember: false,
   });
 
@@ -28,6 +29,11 @@ export default function SignUpWithEmail() {
     setLoading(true);
     setError("");
     setSuccess("");
+    if (data.password !== data.confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
     // Check if email exists in emails collection
     const res = await fetch("/api/check-email", {
       method: "POST",
@@ -61,11 +67,22 @@ export default function SignUpWithEmail() {
       <InputGroup
         type="password"
         label="Password"
-        className="mb-5 [&_input]:py-[15px]"
+        className="mb-4 [&_input]:py-[15px]"
         placeholder="Enter your password"
         name="password"
         handleChange={handleChange}
         value={data.password}
+        icon={<PasswordIcon />}
+      />
+
+      <InputGroup
+        type="password"
+        label="Re-type Password"
+        className="mb-5 [&_input]:py-[15px]"
+        placeholder="Re-type your password"
+        name="confirmPassword"
+        handleChange={handleChange}
+        value={data.confirmPassword}
         icon={<PasswordIcon />}
       />
 
