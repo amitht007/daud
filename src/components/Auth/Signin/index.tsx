@@ -1,15 +1,15 @@
 import Link from "next/link";
 import GoogleSigninButton from "../GoogleSigninButton";
 import SigninWithPassword from "../SigninWithPassword";
+import SignUpWithEmail from "../SignUpWithEmail";
 
 export default function Signin() {
   return (
     <>
-
       <div>
         <SigninWithPassword />
+        <SignUpWithEmail />
       </div>
-
       <div className="mt-6 text-center">
         <p>
           Don’t have any account?{" "}
