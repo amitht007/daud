@@ -39,7 +39,7 @@ export function Sidebar() {
               ]
             : [
                 // Sticky sidebar for desktop
-                "sticky top-[64px] h-[calc(100vh-128px)]",
+                "Sticky h-100vh top-[64px]",
                 sidebarWidth
               ]
         )}
@@ -67,7 +67,7 @@ export function Sidebar() {
               <MenuIcon className={cn("transition-transform", !isOpen && "rotate-180")} />
             </button>
           </div>
-          <nav className="flex-1 overflow-y-auto px-2">
+          <nav className="flex-1 px-2">
             <ul className="space-y-2">
               {NAV_DATA[0].items.map((item) => (
                 <li key={item.title}>

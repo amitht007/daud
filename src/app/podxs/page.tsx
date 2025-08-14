@@ -1,6 +1,7 @@
 "use client"
 
 export default function AboutPage() {
+  
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center px-4">
       <div className="max-w-2xl w-full bg-slate-800/70 rounded-xl shadow-lg p-8 border border-slate-700">

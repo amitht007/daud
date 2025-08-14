@@ -66,7 +66,7 @@ if (require.main === module) {
     console.error("Please set it with: set MONGODB_URI=your_connection_string");
     process.exit(1);
   }
-  const dbName = "ssi"; // Change to your DB name - FIXED: Added semicolon
+  const dbName = "devops-secops"; // Change to your DB name - FIXED: Added semicolon
 
   (async () => {
     const client = new MongoClient(uri);

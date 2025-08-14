@@ -14,7 +14,7 @@ export function ShowcaseSection({ title, children, className }: PropsType) {
         {title}
       </h2>
 
-      <div className={cn("p-4 sm:p-6 xl:p-10", className)}>{children}</div>
+      <div className={cn("p-4 lg:p-6 xl:p-10", className)}>{children}</div>
     </div>
   );
 }

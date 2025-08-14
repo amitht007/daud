@@ -8,7 +8,8 @@ let db: Db;
 export async function connectDB() {
   if (!db) {
     await client.connect();
-    db = client.db("ssi");
+    // db = client.db("ssi");
+    db = client.db("devops-secops");
   }
   return db;
 }
